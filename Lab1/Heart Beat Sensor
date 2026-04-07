@@ -1,0 +1,34 @@
+#define USE_ARDUINO_INTERRUPTS true
+#include <PulseSensorPlayground.h>
+
+const int PULSE_SENSOR_PIN = 0;
+const int LED_PIN = 13;
+const int THRESHOLD = 550;
+
+PulseSensorPlayground pulseSensor;
+
+void setup() {
+  Serial.begin(9600);  // Fixed capitalization
+
+  pinMode(LED_PIN, OUTPUT);  // Optional but good practice
+
+  pulseSensor.analogInput(PULSE_SENSOR_PIN);
+  pulseSensor.blinkOnPulse(LED_PIN);
+  pulseSensor.setThreshold(THRESHOLD);
+
+  if (pulseSensor.begin()) {
+    Serial.println("Pulse Sensor object created successfully!"); // Fixed semicolon
+  }
+}
+
+void loop() {
+  int currentBPM = pulseSensor.getBeatsPerMinute();
+
+  if (pulseSensor.sawStartOfBeat()) {
+    Serial.println("A HeartBeat Happened");
+    Serial.print("BPM: ");   // Better formatting
+    Serial.println(currentBPM);
+  }
+
+  delay(20);
+}
