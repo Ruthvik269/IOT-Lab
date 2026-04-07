@@ -1,0 +1,21 @@
+#define BUTTON_PIN 4 
+
+bool wasPressed = false;
+
+void setup() 
+{ 
+  pinMode(BUTTON_PIN, INPUT_PULLUP);  // stable input
+  Serial.begin(9600); 
+} 
+
+void loop() 
+{ 
+  bool isPressed = (digitalRead(BUTTON_PIN) == LOW); // pressed = LOW
+
+  // Detect press (only once when button is pressed)
+  if (!wasPressed && isPressed) { 
+    Serial.println("Touch pressed"); 
+  }
+
+  wasPressed = isPressed;
+}
