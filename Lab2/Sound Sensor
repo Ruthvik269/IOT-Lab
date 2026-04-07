@@ -1,0 +1,28 @@
+const int soundSensorPin = A0; 
+const int ledPin = 2; 
+
+void setup() {
+  pinMode(soundSensorPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+  
+  Serial.println("Sound-to-Light System Ready");
+}
+
+void loop() {
+  int soundValue = analogRead(soundSensorPin);
+  
+  // Look at your Serial Monitor to find your "quiet" value.
+  // Set threshold about 30-50 points higher than that.
+  int threshold = 115; 
+
+  if (soundValue > threshold) {
+    Serial.print("Sound detected! Level: ");
+    Serial.println(soundValue);
+
+    digitalWrite(ledPin, HIGH); // Turn LED on
+    delay(500);                // Keep it on for half a second
+  } else {
+    digitalWrite(ledPin, LOW);  // Keep LED off
+  }
+}
